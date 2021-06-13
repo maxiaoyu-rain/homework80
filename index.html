@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        li{
+            list-style:none;
+        }
+        
+        /* 导航栏 */
+        .nav{
+            height:55px;
+            display:flex;
+            justify-content:space-around;
+            background:black;
+            color:white;
+            align-items:center;
+        }
+        /* 超链接 */
+        .nav a{
+            display:block;
+            margin-left:20px;
+            text-decoration:none;
+            color:white;
+        }
+        .nav a:hover{
+            color:orange;
+        }
+        .nav_pic{
+            width:15px;
+            height:15px;
+            background:url(./images/pic3.png) -230px -26px;
+            float:left;    
+        }
+        .nav_live{
+            font-size:15px;
+        }
+        .nav_life{
+            font-size:20px;
+        }
+
+        /* 中间部分 */
+        .content{
+            border-bottom: 2px solid #ccc;
+            display:flex;
+        }
+        .left,
+        .right{
+            flex:1 1 50%;
+            /* border:1px solid blue; */
+        }
+        /* 图片旋转动画 */
+        @keyframes animation1{
+            0%{
+                transform:rotate(0deg);
+            }
+            100%{
+                transform:rotate(360deg);
+            }
+        }
+        .wp_pic{
+            width:200px;
+            height:200px;
+            display:block;
+            margin:0 auto;
+            border-radius:50%;
+            margin-top:20px;
+        }
+
+        .prograssBar{
+            width:100%;
+            display:flex;
+            justify-content:space-around;
+            align-items:center;
+        }
+        .btn_play{
+            width:40px;
+            height:40px;
+            background:url(./images/pic7.jpg) -110px -88px;
+        }
+        .btn_mute{
+            width:23px;
+            height:20px;
+            background:url(./images/pic7.jpg) -68px -88px;
+
+        }
+        /* 时间 */
+        .wp_time{
+            width:50px;
+            height:20px;
+        }
+        /* 进度条 */
+        .prograss{
+            width:300px;
+            height:8px;
+            border-radius:5px;
+            margin-left:20px;
+        }
+        #prograssBarn{
+            position: relative;
+            width:100%;
+            height:100%;
+            border-radius:5px;
+            background:#ccc;
+        }
+        #prograssLine{
+            position: absolute;
+
+            border-radius:5px;
+            width:0px;
+            height:8px;
+            background-color:rgb(243, 193, 101);
+        } 
+        #wp_processBtn{
+            position: absolute;
+            left:-4px;
+            top:-1px;
+            width:10px;
+            height:10px;;
+            border-radius:50%;
+            background:url(./images/pic7.jpg) -23px -88px;
+        }
+        #song_down{
+            margin:0 auto;
+            width:200px;
+            height:40px;
+            background:url(./images/pic7.jpg) 0px -135px;
+        }
+        #song_down{
+            color:black;
+            font-size:16px;
+            text-align:center;
+            line-height:40px;
+        }
+        .song_down_pic{
+            position:absolute;
+            width:15px;
+            height:15px;
+            margin-left:20px;
+            margin-top:13px;
+            background:url(./images/pic3.png) -50px -20px;
+        }
+
+        /* 歌词部分 */
+        .song_title{
+            width:100%;
+            text-align:center;
+        }
+        /* 第一行 */
+        .song_info{
+            margin-top:20px;
+            font-size:15px;
+        }
+        .song_album{
+            color:orange;
+        }
+        .song_review_pic{
+            margin-top:5px;
+            width:15px;
+            height:15px;
+            background:url(./images/pic2.jpg);
+            position:absolute;
+        }
+        /* 第二行 */
+        .song_time{
+            margin-top:20px;
+            font-size:5px;
+            font-weight:bold;
+        }
+       /* 歌词 */
+       .yric_list{            
+            height:400px;
+            overflow-y:auto;
+            text-align:center  
+        }
+        .yric_list li{
+            list-style:none;
+            font-size:15px;
+            margin-top:10px;
+        }
+        .yric_list li:nth-child(6){
+            color:orange;     
+        }
+        /* 评论部分 */
+        .review_num{
+            font-size:10px;
+            font-weight:normal;
+        }
+        .people_review{
+            width:80%;
+            margin:0 auto;
+        }
+        /* 评论主体部分 */
+        .comment_writing{
+            top:20px;
+            border-top:1px solid #ccc;
+            position:relative;
+            width:100%;
+            height:800px;
+            overflow:hidden;
+            margin:0 auto;
+        }
+        #comment_writing_pic{
+            position:absolute;
+            float:left;
+            width:60px;
+            height:60px;
+            background:url(./images/郭子仪.jpg) ;
+            background-size:100%;
+        }
+        #comment_writing_border{
+            width:70%;
+            height:200px;
+            margin-left:100px;
+        }
+        #comment_writing_bottom{
+            position:absolute;
+            width:80%;
+            height:20px;
+        } 
+        .comment_writing_emoji{
+            display:inline-block;
+            position:absolute;
+            width:15px;
+            height:15px;
+            top:4px;
+            margin-left:100px;
+            background-size:100%;
+            background:url(./images/pic2.jpg) no-repeat;
+        }
+        #comment_wordsNum{
+            position:absolute;
+            display:block;
+            right:70px;
+        }
+        #comment_submit{
+            border:none;
+            text-decoration:none;
+            width:60px;
+            height:22px;
+            font-size:15px;
+            background:orange;
+            position:absolute;
+            display:block;
+            right:0px;
+            border-radius:2px;
+            color:white;
+            
+        }
+        .great_comments{
+            margin-top:35px;
+        }
+        /* 评论列表 */
+        #great_comments_list{
+            margin-top:5px;
+            position:absolute;
+            width:800px;
+        }
+        #great_comments_list li>div{
+            float:left;
+        }
+        #great_comments_list li{
+            padding-top:20px;
+            margin-top:70px;
+            width:100%;
+            border-bottom: 1px solid #ccc;
+        }
+        .greatComments_host_picture{
+            background:url(./images/郭子仪.jpg);
+            background-size:100%;
+        }
+        .great_comments_pic{
+            margin-top:5px;
+            margin-left:2px;
+            width:60px;
+            height:60px;
+            background:url(./images/pic5.jpg);
+            background-size:100%;
+        }
+        .li_great_comment_block{
+            margin-top:5px;
+            float:left;
+            position:relative;
+            margin-left:50px;
+            width:60%;
+        }
+        .li_great_comment_block h2{
+            font-size:15px;
+            color:orange;
+            margin-left:15px;  
+            font-weight:normal;
+        }
+        .list_share{
+            float:right;
+            font-size:10px;
+            color:black;
+        }
+        .li_great_comment_block h3{
+            font-size:15px;
+            margin-left:15px;
+            font-weight:normal;
+        }
+        .li_great_comment_block h4{
+            font-size:10px;
+            font-weight:normal;
+        }
+        .list_answer{
+            position:relative;
+            float:right;
+            font-size:15px;
+            margin-right:10px;
+            bottom:0;
+        }
+
+        .thumbs_up_picture{
+            right:45px;
+            bottom:0;
+            height:15px;
+            width:15px;
+            position:absolute;
+            background-size:100%;
+            background:url(./images/bg2.jpg);
+        }
+        .delete_comment{
+            right:100px;
+            bottom:0;
+            font-size:15px;
+            position:absolute;
+        }
+        .thumbs_up_count{
+            font-size:15px;
+            font-weight:normal;
+            position:absolute;
+            bottom:0;
+            right:65px;
+        }
+        
+
+        /* 页码 */
+        .page_num{
+            position:absolute;
+            margin-top:20px;
+            width:100%;
+            height:50px;
+        }
+        .page_num ul{
+            margin-left:250px;
+        }
+        .page_num_btn1{
+            margin-left:200px;
+            transform:rotate(180deg);      
+        }
+        .page_num li{
+            margin-left:20px;
+            width:25px;
+            height:25px;
+            border-radius:50%;
+            display:block;
+            float:left;
+            list-style:none;
+            text-align:center;
+            font-size:20px;
+            background-color:rgb(250, 243, 243);
+        }
+        .page_num .page_num1{
+            background:orange;
+        }
+        
+        .user_block{
+            margin:0 auto;
+            width:80%;
+        }
+        .user_block_pic{
+            margin-top:20px;
+            position:absolute;
+            float:left;
+            width:100px;
+            height:100px;
+            
+        }
+        .user_block_pic img{
+            width:100%;
+            height:100%;
+            border-radius:50%;
+        }
+        .user_block_info{
+            box-shadow:-2px -2px rgb(202, 199, 199);
+            margin-top:40px;
+            margin-left:120px;
+            float:left;
+            width:300px;
+            height:70px;
+            border-radius:5px; 
+            background-color:rgb(202, 199, 199);
+        
+        }
+        .user_block_name{
+            text-align:center;
+            font-size:15px;
+            color:grey;
+        }
+        .user_songName{
+            height:25px;
+            margin-top:20px; 
+            margin-left:30px;
+        }
+        .user_songName img{
+            width:20px;
+            height:20px;
+        }
+        .user_songName a{
+            line-height:25px;
+            display:block;
+            float:right;
+            position:relative;
+            text-decoration:one;
+            color:plum;
+            font-size:15px;
+            margin-right:10px;
+        }
+      
+       
+      
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <div class="nav">
+            <div><img src="./images/pic4.jpg"></div>
+            <div class="nav_life"><a href="#">首页</a></div>
+            <div class="nav_life"><a href="#">榜单</a></div>
+            <div class="nav_life"><a href="#">歌手</a></div>
+            <div class="nav_life"><a href="#">下载酷我客户端</a></div>
+            <div class="nav_live"><div class="nav_pic"></div><a href="#">美女秀</a></div>
+            <div class="nav_live"><div class="nav_pic"></div><a href="#">酷我耳机</a></div>
+            <div class="nav_live"><div class="nav_pic"></div><a href="#">VIP会员</a></div>
+            <div class="nav_live"><div class="nav_pic"></div><a href="#">i听</a></div>
+            <div class="nav_live"><a href="#">更多服务</a></div>
+            <div class="nav_live"><a href="#">登录</a></div>
+            <div class="nav_live"><a href="#">^</a></div>
+            <div><img src="./images/pic6.png"/></div></div>
+        </div>
+        <!-- 页面主体 -->
+        <div class = "content">
+            <!-- 歌词部分 -->
+            <div class="left">
+                <div class="song_title">
+                    <h2 class="song_name">喜羊羊</h2>
+                    <div class = "song_info">
+                        专辑: &nbsp;<span class="song_album">儿歌大全</span>&nbsp;&nbsp;
+                        歌手: &nbsp;<span class="song_album">华语群星</span>&nbsp;&nbsp;
+                        分享 &nbsp;<span href="#" class="song_review_pic"></span>&nbsp;&nbsp;&nbsp;&nbsp;评论
+                    </div>
+                    <div class="song_time">上传时间：2015-10-02&nbsp;歌曲来源:&nbsp;民大相思湖网球社</div>
+                    <hr/>
+                    <ul class="yric_list">
+                        <li>白云因为我变得柔软</li>
+                        <li>别看我只是一只羊</li>
+                        <li>羊儿的聪明难以想象</li>
+                        <li>天再高心情一样奔放</li>
+                        <li>每天都追赶太阳</li>
+                        <li>有什么难题 去牵绊我 都不会去心伤</li>
+                        <li>有什么危险 在我面前 也不会去慌乱</li>
+                        <li>就算有狼群 把我追捕 也当做游戏一场</li>
+                        <li>在什么时间 都爱开心 笑容都会飞翔</li>
+                        <li>就算会摔倒 站了起来 永远不会沮丧</li>
+                        <li>在所有天气 拥有叫人 大笑的力量</li>
+                        <li>虽然我只是羊</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 播放器部分 -->
+            <div class="right">
+                <!-- 图片 -->
+                <img src="./images/pic1.jpg" class="wp_pic" id = "wp_pic1"/>
+                <div class = "sound" id = "player">
+                    <!-- 音乐文件 -->
+                    <audio autoplay="autoplay" id="mymusic">
+                        <source src="./music0.mp3" type="audio/mp3">
+                    </audio>
+                    <div class="prograssBar">
+                        <!-- 开始按钮 -->
+                        <div class="btn_play" id="wp_playBtn"></div>
+                        <!-- 进度条 -->
+                        <div class="prograss" id="prograssContent">
+                            <div id="prograssBarn">
+                                <div id="prograssLine"></div>
+                                <div id="wp_processBtn"></div>
+                            </div>    
+                        </div>
+                        <div class="wp_time" id="wp_playTime">00:00</div>
+                        <!-- 静音按钮 -->
+                        <div class="btn_mute" id="wp_mute"></div>
+                    </div>
+                    <div id="song_down"><div class="song_down_pic"></div><a>免费下载这首歌</a></div>
+                    <div class="user_block">
+                        <div class="user_block_pic"><img src="./images/郭子仪.jpg"/></div>
+                        <div class="user_block_info">
+                            <div class="user_block_name">郭子仪——H5班</div>
+                            <div class ="user_songName">
+                                <img src="./images/gif.gif">
+                                喜羊羊与灰太狼
+                                <a href="#">去现场 ></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="people_review">
+            <h4>评论&nbsp;&nbsp;<span class="review_num">1703条评论</span></h4>
+            
+            <div class="comment_writing">
+                <div id="comment_writing_pic"></div>
+                <textarea id = "comment_writing_border"></textarea>
+                <div id = "comment_writing_bottom">
+                    <span class="comment_writing_emoji"></span>
+                    <span id="comment_wordsNum">已输入0个字</span>
+                    <button type="submit" id="comment_submit">评论</button>
+                </div>
+                <div class="great_comments">精彩评论</div>
+                <ul id="great_comments_list">
+                   
+                </ul>
+            </div>
+            <div class="page_num">
+                <ul>
+                    <li class="page_num_btn1">></li>
+                    <li class="page_num1">1</li>
+                    <li class="page_num2">2</li>
+                    <li class="page_num3">3</li>
+                    <li class="page_nums">...</li>
+                    <li class="last_page">17</li>
+                    <li class="page_num_btn2">></li>
+                </ul>
+            </div>
+        </div>
+        
+
+
+    </div>
+    
+</body>
+<script>
+    var wp_pic1 = document.getElementById("wp_pic1");
+    var mymusic = document.getElementById("mymusic");//音乐
+    var wp_playBtn = document.getElementById("wp_playBtn");//开始按钮
+    var wp_mute = document.getElementById("wp_mute");//静音标志
+    var wp_time = document.getElementById("wp_time");
+    var wp_processBtn =document.getElementById("wp_processBtn");//进度按钮
+    var prograssLine = document.getElementById("prograssLine");//进度条
+    var prograssBarn = document.getElementById("prograssBarn");//进度总条
+
+    // 评论部分
+    
+    var comment_writing_border = document.getElementById("comment_writing_border");
+    var comment_writing_bottom = document.getElementById("comment_writing_bottom");
+    var comment_wordsNum = document.getElementById("comment_wordsNum");
+    var comment_submit = document.getElementById("comment_submit");//评论按钮
+    var great_comments_list = document.getElementById("great_comments_list");
+    // 开始暂停音乐
+    var playNumber = true;
+    wp_playBtn.onclick = function() {
+        if(playNumber){
+            mymusic.play();
+            playNumber = false;
+            wp_playBtn.style.backgroundPosition = "-207px -48px";
+            wp_pic1.style.animation="animation1 infinite linear 10s"
+        }
+        else{
+            mymusic.pause();
+            playNumber =true;
+            wp_playBtn.style.backgroundPosition = "-162px -88px";
+            wp_pic1.style.animation="paused"
+            
+        }
+    }
+    //静音和取消静音
+    wp_mute.onclick = function() {
+        if(mymusic.muted) {
+            mymusic.muted = false;
+            wp_mute.style.backgroundPosition = "-68px -88px";
+        }
+        else{
+            mymusic.muted = true;
+            wp_mute.style.backgroundPosition = "-43px -88px";
+        }
+    }
+    // 时间+进度条+静音暂停控制
+    var timer = setInterval(function() {
+        var currentTime = mymusic.currentTime;//获取当前音乐播放时间
+        var minutes = parseInt(currentTime / 60);
+        var seconds = parseInt(currentTime % 60);
+        if(minutes < 10){
+            minutes = "0" + minutes;
+        }else{
+            minutes = minutes;
+        }
+        if(seconds < 10){
+            seconds = "0" + seconds;
+        }else{
+            seconds = seconds;
+        }
+        wp_playTime.innerHTML = minutes + ":" + seconds;//动态时间
+        var audioLength = mymusic.duration;
+        var rateLength = currentTime / audioLength;
+        var length = prograssBarn.offsetWidth;
+        prograssLine.style.width = rateLength * length+"px";
+        wp_processBtn.style.left = rateLength * length - 4 +"px";
+    },1000)
+    
+   
+    //字数监听
+    document.addEventListener("keyup", function() {
+        console.log(comment_writing_border.value.length);
+        comment_wordsNum.innerHTML = "已输入" + comment_writing_border.value.length + "个字";
+    })
+
+    //曾经存储的数据
+    var commentDatas = [{
+        userName:"郭子仪",
+        userComments:"Too",
+        userCommentTime: "2017-05-20 07:00:42",
+        thumbsUpCount: 165
+    },{
+        userName:"Forget",
+        userComments: "我喜欢很多歌曲，喜欢过很多唱歌的人，那些有时不是我的爱好，已经成为我那段青春的回忆，我现在可以很骄傲",
+        userCommentTime: "2017-06-03 16:58:02",
+        thumbsUpCount: 149
+    },{
+        userName:"亚里士多德",
+        userComments:"学校晚会表演这歌曲",
+        userCommentTime: "2017-05-14 16:16:53",
+        thumbsUpCount: 105   
+    }]
+    // 存储数据
+    function saveComments(){
+        if(!window.localStorage){
+            alert("请更换浏览器");
+        } else{
+            if (localStorage.getItem("commentsDatasStr") === null) {
+                console.log(localStorage.getItem("commentsDatasStr") === null);
+                var commentsDatasStr = JSON.stringify(commentDatas);
+                localStorage.setItem("commentsDatasStr", commentsDatasStr);
+                // 如果commentsDatasStr为空，则输入数据
+            }
+        }
+    }
+    // 获得数据使数据显示在浏览器面上
+    function getComments(){
+        // 读取存储的数据
+        var json = localStorage.getItem("commentsDatasStr");
+        // 将字符串转换为JSON对象
+        var commentsDatasObj = JSON.parse(json);
+            
+        for(var i = 0;i<commentsDatasObj.length;i++){
+            var liNode = document.createElement("li");
+            great_comments_list.appendChild(liNode);
+
+            var greatCommentsPic = document.createElement("div");
+            liNode.appendChild(greatCommentsPic);
+            greatCommentsPic.classList.add("great_comments_pic");
+
+            var greatCommentBlock = document.createElement("div");
+            liNode.appendChild(greatCommentBlock);
+            greatCommentBlock.classList.add("li_great_comment_block");
+
+            var h1Node =document.createElement("h2");
+            greatCommentBlock.appendChild(h1Node);
+            h1Node.innerHTML = commentsDatasObj[i].userName;
+
+            var h1SpanNode = document.createElement("span");
+            h1Node.appendChild(h1SpanNode);
+            h1SpanNode.classList.add("list_share");
+            h1SpanNode.innerHTML="分享";
+
+            var h2Node = document.createElement("h3");
+            greatCommentBlock.appendChild(h2Node);
+            h2Node.innerHTML = commentsDatasObj[i].userComments;
+
+            var h3Node = document.createElement("h4");
+            greatCommentBlock.appendChild(h3Node);
+            h3Node.innerHTML = commentsDatasObj[i].userCommentTime;
+
+            var h3SpanNode = document.createElement("span");
+            h3Node.appendChild(h3SpanNode);
+            h3SpanNode.classList.add("list_answer"); 
+            h3SpanNode.innerHTML = "回复";
+
+           var deleteCommentSpan = document.createElement("span");
+           greatCommentBlock.appendChild(deleteCommentSpan);
+           deleteCommentSpan.classList.add("delete_comment");
+
+           var thumbsUpCountSpan = document.createElement("span");
+           greatCommentBlock.appendChild(thumbsUpCountSpan);
+           thumbsUpCountSpan.classList.add("thumbs_up_count");
+           thumbsUpCountSpan.innerHTML = commentsDatasObj[i].thumbsUpCount;
+
+           var thumbsUpPictureSpan = document.createElement("span");
+           greatCommentBlock.appendChild(thumbsUpPictureSpan);
+           thumbsUpPictureSpan.classList.add("thumbs_up_picture");
+
+           if (commentsDatasObj[i].userName == "郭子仪") {
+               greatCommentsPic.classList.add("greatComments_host_picture");
+               deleteCommentSpan.innerHTML = "删除";
+            }
+        }
+
+    }
+    // 调用方法
+    saveComments();
+    getComments();
+
+    comment_submit.onclick=function() {
+        if(comment_writing_border.value == ''){
+            alert("评论不能为空！");
+        }else{
+            var commentWriting = comment_writing_border.value;
+            comment_writing_border.value="";
+            var date = new Date();
+            var year = date.getFullYear();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            month = month < 10 ? "0" + month : month;
+            var d = date.getDate();
+            d = d < 10 ? "0" + d : d;
+            var hour = date.getHours();
+            hour = hour < 10 ? "0" + hour : hour;
+            var min = date.getMinutes();
+            min = min < 10 ? "0" + min : min;
+            var sec = date.getSeconds();
+            sec = sec < 10 ? "0" + sec : sec;
+            var hostCommentTime = year + "-" + month + "-" + d + " " + hour + ":" + min + ":" + sec;
+            var hostObj = {
+                userName: "郭子仪",
+                userComments: commentWriting,
+                userCommentTime: hostCommentTime,
+                thumbsUpCount: 0
+            }
+            var json = localStorage.getItem("commentsDatasStr");
+            var commentsDatasObj = JSON.parse(json);
+            commentsDatasObj.unshift(hostObj);
+            json = JSON.stringify(commentsDatasObj);
+            localStorage["commentsDatasStr"] = json;
+            great_comments_list.innerHTML = "";
+            getComments();
+
+
+        }
+    }
+ 
+
+</script>
+
+</html>
